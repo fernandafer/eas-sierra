@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacidad · EAS Sierra de Madrid</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a href="index.html" class="mini-logo" aria-label="EAS, volver al inicio">
+      <span>E</span>
+      <svg class="mini-a" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,0 50,52 6,92" fill="#2F74B5"/><polygon points="50,0 94,92 50,52" fill="#4D96DA"/><path d="M2,100 C26,96 36,64 50,62 C64,64 74,96 98,100 Z" fill="#6AA84F"/></svg>
+      <span>S</span>
+    </a>
+    <a href="index.html" class="btn btn-sm">Volver</a>
+  </div>
+</header>
+
+<main class="legal">
+  <div class="wrap narrow">
+    <h1>Información sobre privacidad</h1>
+    <p class="fecha">Última actualización: noviembre 2026</p>
+
+    <h2>1. Responsable del tratamiento</h2>
+    <ul>
+      <li><strong>Identidad:</strong> Fernanda Rodríguez García</li>
+      <li><strong>NIF:</strong> <span class="js-nif">&nbsp;</span></li>
+      <li><strong>Email:</strong> <span class="js-mail">&nbsp;</span></li>
+    </ul>
+    <p>EAS es una iniciativa independiente promovida a título personal. No forma parte de ninguna empresa ni se utiliza con fines comerciales.</p>
+
+    <h2>2. Qué datos recogemos y para qué</h2>
+    <table>
+      <tr><th>Datos</th><th>Finalidad</th></tr>
+      <tr><td>Nombre, email y teléfono</td><td>Contactarte para una conversación inicial y, si te incorporas, convocarte a los encuentros.</td></tr>
+      <tr><td>Empresa, cargo, municipio y relación con la Sierra</td><td>Valorar si encajas en el perfil de EAS (personas que dirigen un negocio vinculadas a la Sierra).</td></tr>
+      <tr><td>Quién te ha hablado de EAS, el reto que te gustaría compartir y lo que buscas</td><td>Conocerte mejor y preparar la conversación inicial y los encuentros.</td></tr>
+    </table>
+    <p>No usamos tus datos para enviarte publicidad ni los cedemos con fines comerciales.</p>
+
+    <h2>3. Base jurídica</h2>
+    <p>Tu consentimiento, que das al enviar el formulario. Puedes retirarlo cuando quieras escribiendo al email de contacto, sin que afecte a lo tratado antes.</p>
+
+    <h2>4. Cuánto tiempo los conservamos</h2>
+    <p>Mientras participes en EAS. Si no llegas a incorporarte, se eliminan a los 12 meses desde tu solicitud. Si dejas EAS, se eliminan cuando lo comuniques, salvo que una obligación legal exija conservarlos.</p>
+
+    <h2>5. Quién más tiene acceso</h2>
+    <p>Tus datos no se ceden a terceros salvo obligación legal. Para que la web funcione se usan estos proveedores, que actúan como encargados del tratamiento:</p>
+    <ul>
+      <li><strong>Google</strong> (Google Sheets y Gmail): guarda las solicitudes y envía el aviso de cada solicitud recibida.</li>
+      <li><strong>GitHub</strong> (GitHub Pages): aloja la web. Como cualquier servidor, registra datos técnicos como la dirección IP.</li>
+      <li><strong>Google Fonts</strong>: sirve la tipografía de la web, por lo que tu navegador se conecta a servidores de Google.</li>
+    </ul>
+    <p>Algunos de estos proveedores pueden tratar datos fuera del Espacio Económico Europeo (Estados Unidos). Esas transferencias se amparan en las garantías que ofrece cada proveedor (Marco de Privacidad de Datos UE‑EE.UU. o cláusulas contractuales tipo de la Comisión Europea).</p>
+    <p>Si te incorporas a un grupo de WhatsApp de EAS, el resto de integrantes podrá ver tu número de teléfono.</p>
+
+    <h2>6. Tus derechos</h2>
+    <p>Puedes acceder, rectificar, suprimir, oponerte, limitar el tratamiento y solicitar la portabilidad de tus datos escribiendo a <span class="js-mail">&nbsp;</span> con el asunto “Protección de datos”. También puedes reclamar ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>).</p>
+
+    <h2>7. Cookies</h2>
+    <p>Esta web no instala cookies propias ni de análisis o publicidad.</p>
+
+    <h2>8. Cambios</h2>
+    <p>Esta información puede actualizarse. La versión vigente estará siempre en esta página, con su fecha.</p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-in">
+    <p><strong>EAS</strong> · Empresarios y Autónomos de la Sierra de Madrid</p>
+    <p><a href="index.html">Inicio</a> · <a href="legal.html">Aviso legal</a> · <a href="privacidad.html">Privacidad</a></p>
+  </div>
+</footer>
+<script>
+// NIF y email se montan con JavaScript para que no los lean los bots que rastrean la web
+(function(){
+  var n = ['5','0','3','1','8','4','2','2','B'];
+  var u = ['e','a','s'], d = ['d','e','l','e','n','s','.','e','s'];
+  var mail = u.join('') + '@' + d.join('');
+  document.querySelectorAll('.js-nif').forEach(function(el){ el.textContent = n.join(''); });
+  document.querySelectorAll('.js-mail').forEach(function(el){
+    var a = document.createElement('a'); a.href = 'mailto:' + mail; a.textContent = mail;
+    el.textContent = ''; el.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>

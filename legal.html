@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aviso legal · EAS Sierra de Madrid</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a href="index.html" class="mini-logo" aria-label="EAS, volver al inicio">
+      <span>E</span>
+      <svg class="mini-a" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,0 50,52 6,92" fill="#2F74B5"/><polygon points="50,0 94,92 50,52" fill="#4D96DA"/><path d="M2,100 C26,96 36,64 50,62 C64,64 74,96 98,100 Z" fill="#6AA84F"/></svg>
+      <span>S</span>
+    </a>
+    <a href="index.html" class="btn btn-sm">Volver</a>
+  </div>
+</header>
+
+<main class="legal">
+  <div class="wrap narrow">
+    <h1>Aviso legal</h1>
+    <p class="fecha">Última actualización: noviembre 2026</p>
+
+    <h2>1. Datos identificativos</h2>
+    <p>En cumplimiento del artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa:</p>
+    <ul>
+      <li><strong>Titular:</strong> Fernanda Rodríguez García</li>
+      <li><strong>NIF:</strong> <span class="js-nif">&nbsp;</span></li>
+      <li><strong>Actividad:</strong> EAS, iniciativa de networking empresarial de proximidad, sin cuota, promovida a título personal</li>
+      <li><strong>Domicilio:</strong> Madrid, España</li>
+      <li><strong>Email:</strong> <span class="js-mail">&nbsp;</span></li>
+      <li><strong>Contacto:</strong> también a través del <a href="index.html#participar">formulario de la web</a></li>
+      <li><strong>Sitio web:</strong> eas.delens.es</li>
+    </ul>
+
+    <h2>2. Independencia de la iniciativa</h2>
+    <p>EAS es una iniciativa independiente. No forma parte de ninguna empresa ni se presta como servicio profesional. El uso del dominio delens.es es únicamente técnico.</p>
+
+    <h2>3. Objeto</h2>
+    <p>Este aviso legal regula el acceso y uso del sitio web eas.delens.es (en adelante, “el Sitio Web”). Acceder al Sitio Web implica aceptar estas condiciones.</p>
+
+    <h2>4. Propiedad intelectual</h2>
+    <p>Los contenidos del Sitio Web —textos, logotipo, diseño y código— pertenecen a su titular o a terceros que han autorizado su uso. No se permite su reproducción, distribución o transformación sin autorización.</p>
+
+    <h2>5. Responsabilidad</h2>
+    <p>La titular no se hace responsable de los daños derivados del uso del Sitio Web, de la imposibilidad de acceder a él ni de virus o programas que puedan afectar a los equipos de los usuarios. Los contenidos son informativos.</p>
+
+    <h2>6. Enlaces externos</h2>
+    <p>El Sitio Web puede enlazar a páginas de terceros, sobre cuyo contenido la titular no asume responsabilidad.</p>
+
+    <h2>7. Legislación y jurisdicción</h2>
+    <p>Este aviso legal se rige por la legislación española. Para cualquier controversia, las partes se someten a los Juzgados y Tribunales de Madrid, salvo que la ley establezca otro fuero.</p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-in">
+    <p><strong>EAS</strong> · Empresarios y Autónomos de la Sierra de Madrid</p>
+    <p><a href="index.html">Inicio</a> · <a href="legal.html">Aviso legal</a> · <a href="privacidad.html">Privacidad</a></p>
+  </div>
+</footer>
+<script>
+// NIF y email se montan con JavaScript para que no los lean los bots que rastrean la web
+(function(){
+  var n = ['5','0','3','1','8','4','2','2','B'];
+  var u = ['e','a','s'], d = ['d','e','l','e','n','s','.','e','s'];
+  var mail = u.join('') + '@' + d.join('');
+  document.querySelectorAll('.js-nif').forEach(function(el){ el.textContent = n.join(''); });
+  document.querySelectorAll('.js-mail').forEach(function(el){
+    var a = document.createElement('a'); a.href = 'mailto:' + mail; a.textContent = mail;
+    el.textContent = ''; el.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>

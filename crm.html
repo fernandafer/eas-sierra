@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>EAS · CRM</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--sierra:#0F4C81;--sierra-d:#0A365D;--cielo:#3B82C4;--verde:#6AA84F;--nieve:#F1F6FA;--texto:#1E2B38;--suave:#55677A;--linea:#D9E4EE;--rojo:#C0392B;--ambar:#C98F00}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Montserrat",system-ui,sans-serif;background:var(--nieve);color:var(--texto);font-size:14px;line-height:1.5}
+button,input,select,textarea{font:inherit}
+.hidden{display:none!important}
+
+/* login */
+#login{position:fixed;inset:0;background:var(--sierra);display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#fff;border-radius:16px;padding:40px 32px;width:100%;max-width:360px;text-align:center}
+.logo{display:flex;justify-content:center;align-items:flex-end;gap:1px;font-weight:800;color:var(--sierra);font-size:2.4rem;line-height:1;margin-bottom:6px}
+.logo svg{width:38px;height:38px;margin-bottom:3px}
+.login-box p{color:var(--suave);font-size:.85rem;margin-bottom:24px}
+.inp{width:100%;padding:12px 14px;border:1.5px solid var(--linea);border-radius:10px;background:var(--nieve);outline:none}
+.inp:focus{border-color:var(--cielo);background:#fff}
+.btn{display:inline-block;background:var(--sierra);color:#fff;border:0;border-radius:999px;padding:10px 20px;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--sierra-d)}
+.btn:disabled{opacity:.6;cursor:default}
+.btn-ghost{background:#fff;color:var(--sierra);border:1.5px solid var(--linea)}
+.btn-ghost:hover{background:#fff;border-color:var(--sierra)}
+.btn-full{width:100%;margin-top:14px;padding:13px}
+.err{color:var(--rojo);font-size:.8rem;margin-top:10px}
+
+/* app */
+header{background:#fff;border-bottom:1px solid var(--linea);position:sticky;top:0;z-index:10}
+.bar{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.bar .logo{font-size:1.6rem;margin:0}
+.bar .logo svg{width:25px;height:25px;margin-bottom:2px}
+.bar .tag{color:var(--suave);font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{background:none;border:0;padding:8px 14px;border-radius:999px;color:var(--suave);font-weight:600;cursor:pointer}
+.tab.on{background:var(--nieve);color:var(--sierra)}
+main{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+h1{color:var(--sierra);font-size:1.5rem}
+.sub{color:var(--suave);font-size:.85rem}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:16px 18px}
+.kpi b{display:block;font-size:2rem;color:var(--sierra);line-height:1.1}
+.kpi span{font-size:.75rem;color:var(--suave);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.chip{background:#fff;border:1.5px solid var(--linea);border-radius:999px;padding:6px 14px;font-size:.8rem;color:var(--suave);cursor:pointer;font-weight:600}
+.chip.on{background:var(--sierra);border-color:var(--sierra);color:#fff}
+.search{margin-left:auto;width:260px;padding:8px 14px;border:1.5px solid var(--linea);border-radius:999px;outline:none;background:#fff}
+.search:focus{border-color:var(--cielo)}
+
+.list{background:#fff;border:1px solid var(--linea);border-radius:14px;overflow:hidden}
+.row{display:grid;grid-template-columns:90px 1.4fr 1.2fr 1fr 150px 24px;gap:12px;align-items:center;padding:14px 18px;border-bottom:1px solid #EEF3F8;cursor:pointer}
+.row:hover{background:#FAFCFE}
+.row.th{cursor:default;background:#F7FAFC;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--suave);font-weight:700}
+.row.th:hover{background:#F7FAFC}
+.muted{color:var(--suave);font-size:.8rem}
+.name{font-weight:600;color:var(--sierra)}
+.arrow{color:var(--suave);transition:transform .15s}
+.open .arrow{transform:rotate(90deg)}
+.detail{display:none;padding:4px 18px 20px;border-bottom:1px solid #EEF3F8;background:#FAFCFE}
+.open + .detail{display:block}
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 20px;margin:8px 0 16px}
+.dgrid dt{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--verde);font-weight:700}
+.dgrid dd{word-break:break-word}
+.dgrid a{color:var(--cielo)}
+.block{margin-bottom:12px}
+.block h4{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--verde);margin-bottom:4px}
+.block p{white-space:pre-wrap;background:#fff;border:1px solid var(--linea);border-radius:10px;padding:10px 12px}
+textarea.note{width:100%;min-height:70px;padding:10px 12px;border:1.5px solid var(--linea);border-radius:10px;outline:none;resize:vertical}
+textarea.note:focus{border-color:var(--cielo)}
+.saved{font-size:.75rem;color:var(--verde);margin-left:8px}
+
+select.estado{border:1.5px solid var(--linea);border-radius:999px;padding:5px 10px;font-size:.8rem;font-weight:600;cursor:pointer;background:#fff;outline:none;max-width:100%}
+.e-nueva{color:var(--cielo)}.e-contactada{color:var(--ambar)}.e-conversacion{color:#7A5BC4}.e-admitida{color:var(--verde)}.e-descartada{color:#8A97A5}
+.empty{padding:40px;text-align:center;color:var(--suave)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:18px}
+.card h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sierra);margin-bottom:14px}
+.barl{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:4px}
+.track{height:8px;background:#EAF1F7;border-radius:4px;margin-bottom:12px}
+.fill{height:100%;border-radius:4px;background:var(--cielo)}
+
+@media (max-width:900px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr 140px 20px}
+  .row .c-fecha,.row .c-emp,.row .c-mun{display:none}
+  .row.th{display:none}
+  .dgrid{grid-template-columns:1fr 1fr}
+  .search{width:100%;margin-left:0}
+  .tabs{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="a-montana" viewBox="0 0 100 100">
+    <polygon points="50,0 50,52 6,92" fill="#2F74B5"/>
+    <polygon points="50,0 94,92 50,52" fill="#4D96DA"/>
+    <path d="M2,100 C26,96 36,64 50,62 C64,64 74,96 98,100 Z" fill="#6AA84F"/>
+  </symbol>
+</svg>
+
+<div id="login">
+  <form class="login-box" onsubmit="login(event)">
+    <div class="logo"><span>E</span><svg><use href="#a-montana"/></svg><span>S</span></div>
+    <p>Acceso privado · CRM</p>
+    <input class="inp" id="pwd" type="password" placeholder="Contraseña" autocomplete="current-password" required>
+    <button class="btn btn-full" id="login-btn" type="submit">Entrar</button>
+    <div class="err hidden" id="login-err"></div>
+  </form>
+</div>
+
+<div id="app" class="hidden">
+  <header>
+    <div class="bar">
+      <div class="logo"><span>E</span><svg><use href="#a-montana"/></svg><span>S</span></div>
+      <span class="tag">CRM</span>
+      <nav class="tabs">
+        <button class="tab on" data-v="sol" onclick="vista('sol')">Solicitudes</button>
+        <button class="tab" data-v="stats" onclick="vista('stats')">Estadísticas</button>
+        <button class="tab" onclick="logout()">Salir</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="v-sol">
+      <div class="head">
+        <div><h1>Solicitudes</h1><div class="sub">Personas que han pedido información desde la landing</div></div>
+        <div class="actions">
+          <button class="btn btn-ghost" onclick="exportCSV()">Exportar CSV</button>
+          <button class="btn sync-btn" onclick="sync()">↻ Actualizar</button>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><b id="k-total">0</b><span>Solicitudes</span></div>
+        <div class="kpi"><b id="k-nuevas">0</b><span>Sin contactar</span></div>
+        <div class="kpi"><b id="k-conv">0</b><span>En conversación</span></div>
+        <div class="kpi"><b id="k-adm">0</b><span>Admitidas</span></div>
+      </div>
+
+      <div class="filters" id="filters"></div>
+
+      <div class="list" id="list"></div>
+    </section>
+
+    <section id="v-stats" class="hidden">
+      <div class="head"><div><h1>Estadísticas</h1><div class="sub">De dónde vienen y en qué punto están</div></div></div>
+      <div class="stats">
+        <div class="card"><h3>Por estado</h3><div id="s-estado"></div></div>
+        <div class="card"><h3>Por municipio</h3><div id="s-mun"></div></div>
+        <div class="card"><h3>Relación con la Sierra</h3><div id="s-rel"></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────
+// Pega aquí la URL /exec de tu Apps Script. Puede ser pública: sin la clave no da datos.
+// La contraseña NO va aquí: se guarda en Apps Script (Propiedades del script → CRM_KEY).
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbww--Q5-2uKLSTmcjGOKZyRw3PqHi6qiwQ80PPb6VJ0bi_FBDwVWFBdVtl8_pMWIgP3TA/exec';
+
+const ESTADOS = [['nueva','Nueva'],['contactada','Contactada'],['conversacion','Conversación'],['admitida','Admitida'],['descartada','Descartada']];
+const ETXT = Object.fromEntries(ESTADOS);
+
+let key = '', data = [], filtro = 'todas', busca = '', abiertos = new Set(), timer = null, syncing = false;
+
+function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+async function api(action, extra){
+  const r = await fetch(ENDPOINT, {method:'POST', body: JSON.stringify(Object.assign({action, key}, extra||{}))});
+  return r.json();
+}
+
+// ── LOGIN ───────────────────────────────────────────────────
+async function login(e){
+  e.preventDefault();
+  const err = document.getElementById('login-err'), btn = document.getElementById('login-btn');
+  err.classList.add('hidden');
+  if(ENDPOINT.indexOf('PEGAR_') === 0){ err.textContent = 'Falta pegar la URL del Apps Script en crm.html (ENDPOINT).'; err.classList.remove('hidden'); return; }
+  key = document.getElementById('pwd').value;
+  btn.disabled = true;
+  try {
+    const r = await api('login');
+    if(!r.ok) throw 0;
+    try{ sessionStorage.setItem('eas_key', key); }catch(_){}
+    entrar();
+  } catch(_){
+    key = '';
+    err.textContent = 'Contraseña incorrecta (o demasiados intentos: espera 15 min).';
+    err.classList.remove('hidden');
+  } finally { btn.disabled = false; }
+}
+
+function entrar(){
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  render(); sync();
+  clearInterval(timer); timer = setInterval(sync, 5*60*1000);
+}
+
+function logout(){ try{ sessionStorage.removeItem('eas_key'); }catch(_){} location.reload(); }
+
+(async function(){
+  let k=''; try{ k = sessionStorage.getItem('eas_key')||''; }catch(_){}
+  if(!k || ENDPOINT.indexOf('PEGAR_')===0) return;
+  key = k;
+  try{ const r = await api('login'); if(r.ok) entrar(); else { key=''; sessionStorage.removeItem('eas_key'); } }catch(_){ key=''; }
+})();
+
+// ── DATOS ───────────────────────────────────────────────────
+async function sync(){
+  if(syncing || !key) return;
+  syncing = true;
+  const b = document.querySelector('.sync-btn'); b.disabled = true; b.textContent = '↻ Cargando...';
+  try {
+    const r = await api('solicitudes');
+    if(r.error === 'unauthorized'){ logout(); return; }
+    if(r.ok){ data = r.solicitudes; render(); }
+  } catch(e){ alert('No se pudo conectar con Google Sheets: ' + e.message); }
+  finally { b.disabled = false; b.textContent = '↻ Actualizar'; syncing = false; }
+}
+
+async function setEstado(id, val, sel){
+  const x = data.find(d=>d.id===id); if(!x) return;
+  x.estado = val; sel.className = 'estado e-'+val; kpis(); filtros();
+  try{ const r = await api('actualizar_estado',{id, estado: val}); if(!r.ok) throw 0; }
+  catch(_){ alert('No se pudo guardar el estado'); }
+}
+
+async function setNota(id, val, el){
+  const x = data.find(d=>d.id===id); if(!x || x.nota === val) return;
+  x.nota = val;
+  try{
+    const r = await api('actualizar_nota',{id, nota: val}); if(!r.ok) throw 0;
+    const s = el.parentElement.querySelector('.saved'); if(s){ s.textContent='Guardado'; setTimeout(()=>s.textContent='',2000); }
+  } catch(_){ alert('No se pudo guardar la nota'); }
+}
+
+// ── RENDER ──────────────────────────────────────────────────
+function render(){ kpis(); filtros(); lista(); }
+
+function kpis(){
+  document.getElementById('k-total').textContent = data.length;
+  document.getElementById('k-nuevas').textContent = data.filter(d=>d.estado==='nueva').length;
+  document.getElementById('k-conv').textContent = data.filter(d=>d.estado==='contactada'||d.estado==='conversacion').length;
+  document.getElementById('k-adm').textContent = data.filter(d=>d.estado==='admitida').length;
+}
+
+function filtros(){
+  const n = e => data.filter(d=>d.estado===e).length;
+  document.getElementById('filters').innerHTML =
+    `<button class="chip ${filtro==='todas'?'on':''}" onclick="setFiltro('todas')">Todas (${data.length})</button>` +
+    ESTADOS.map(([v,t])=>`<button class="chip ${filtro===v?'on':''}" onclick="setFiltro('${v}')">${t} (${n(v)})</button>`).join('') +
+    `<input class="search" placeholder="Buscar nombre, empresa, municipio..." value="${esc(busca)}" oninput="setBusca(this.value)">`;
+}
+function setFiltro(f){ filtro=f; filtros(); lista(); }
+function setBusca(q){ busca=q; lista(); }
+
+function lista(){
+  const q = busca.toLowerCase().trim();
+  const rows = data.filter(d => (filtro==='todas'||d.estado===filtro) &&
+    (!q || [d.nombre,d.email,d.empresa,d.municipio,d.cargo,d.invita].join(' ').toLowerCase().includes(q)));
+  const el = document.getElementById('list');
+  if(!rows.length){
+    el.innerHTML = `<div class="empty">${data.length ? 'No hay solicitudes con este filtro.' : 'Todavía no hay solicitudes.'}</div>`;
+    return;
+  }
+  el.innerHTML = `<div class="row th"><div>Fecha</div><div>Persona</div><div>Empresa</div><div>Municipio</div><div>Estado</div><div></div></div>` +
+    rows.map(d => `
+    <div class="row ${abiertos.has(d.id)?'open':''}" onclick="toggle(${d.id},this,event)">
+      <div class="c-fecha muted">${esc(d.fecha)}</div>
+      <div><div class="name">${esc(d.nombre)}</div><div class="muted">${esc(d.cargo)}</div></div>
+      <div class="c-emp">${esc(d.empresa)}</div>
+      <div class="c-mun">${esc(d.municipio)}</div>
+      <div><select class="estado e-${esc(d.estado)}" onchange="setEstado(${d.id},this.value,this)">
+        ${ESTADOS.map(([v,t])=>`<option value="${v}" ${d.estado===v?'selected':''}>${t}</option>`).join('')}
+      </select></div>
+      <div class="arrow">›</div>
+    </div>
+    <div class="detail">
+      <dl class="dgrid">
+        <div><dt>Email</dt><dd><a href="mailto:${encodeURIComponent(d.email)}">${esc(d.email)}</a></dd></div>
+        <div><dt>Teléfono</dt><dd><a href="tel:${esc(d.telefono.replace(/[^\d+]/g,''))}">${esc(d.telefono)}</a></dd></div>
+        <div><dt>Relación con la Sierra</dt><dd>${esc(d.relacion)||'—'}</dd></div>
+        <div><dt>Quién le habló de EAS</dt><dd>${esc(d.invita)||'—'}</dd></div>
+        <div><dt>Fecha</dt><dd>${esc(d.fecha)}</dd></div>
+      </dl>
+      <div class="block"><h4>Reto empresarial</h4><p>${esc(d.reto)||'—'}</p></div>
+      <div class="block"><h4>Qué busca en EAS</h4><p>${esc(d.motivacion)||'—'}</p></div>
+      <div class="block"><h4>Notas <span class="saved"></span></h4>
+        <textarea class="note" placeholder="Notas internas (se guardan al salir del campo)" onblur="setNota(${d.id},this.value,this)">${esc(d.nota)}</textarea>
+      </div>
+    </div>`).join('');
+}
+
+function toggle(id, row, e){
+  if(e.target.closest('select')) return;
+  row.classList.toggle('open');
+  row.classList.contains('open') ? abiertos.add(id) : abiertos.delete(id);
+}
+
+function vista(v){
+  document.getElementById('v-sol').classList.toggle('hidden', v!=='sol');
+  document.getElementById('v-stats').classList.toggle('hidden', v!=='stats');
+  document.querySelectorAll('.tab[data-v]').forEach(t=>t.classList.toggle('on', t.dataset.v===v));
+  if(v==='stats') stats();
+}
+
+function barras(el, mapa, etiquetas){
+  const total = data.length;
+  const items = Object.entries(mapa).sort((a,b)=>b[1]-a[1]);
+  document.getElementById(el).innerHTML = items.length ? items.map(([k,n])=>{
+    const p = total ? Math.round(n/total*100) : 0;
+    return `<div class="barl"><span>${esc(etiquetas ? (etiquetas[k]||k) : (k||'Sin indicar'))}</span><b>${n}</b></div><div class="track"><div class="fill" style="width:${p}%"></div></div>`;
+  }).join('') : '<div class="muted">Sin datos</div>';
+}
+
+function stats(){
+  const cuenta = f => data.reduce((m,d)=>{ const k = f(d); m[k]=(m[k]||0)+1; return m; },{});
+  barras('s-estado', cuenta(d=>d.estado), ETXT);
+  barras('s-mun', cuenta(d=>(d.municipio||'').trim()));
+  barras('s-rel', cuenta(d=>d.relacion));
+}
+
+function exportCSV(){
+  const head = ['Fecha','Nombre','Email','Teléfono','Empresa','Cargo','Municipio','Relación Sierra','Quién le habló','Reto','Qué busca','Estado','Notas'];
+  const cell = v => { let s = String(v==null?'':v); if(/^[=+\-@]/.test(s)) s="'"+s; return '"'+s.replace(/"/g,'""')+'"'; };
+  const rows = [head].concat(data.map(d=>[d.fecha,d.nombre,d.email,d.telefono,d.empresa,d.cargo,d.municipio,d.relacion,d.invita,d.reto,d.motivacion,ETXT[d.estado]||d.estado,d.nota]));
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(r=>r.map(cell).join(',')).join('\n'));
+  a.download = 'eas_solicitudes_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+</script>
+</body>
+</html>
