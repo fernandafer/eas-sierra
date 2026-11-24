@@ -114,10 +114,11 @@ select.estado{border:1.5px solid var(--linea);border-radius:999px;padding:5px 10
 </svg>
 
 <div id="login">
-  <form class="login-box" onsubmit="login(event)">
+  <form class="login-box" method="post" action="#" onsubmit="login(event)">
     <div class="logo"><span>E</span><svg><use href="#a-montana"/></svg><span>S</span></div>
     <p>Acceso privado · CRM</p>
-    <input class="inp" id="pwd" type="password" placeholder="Contraseña" autocomplete="current-password" required>
+    <input type="text" name="username" autocomplete="username" value="EAS CRM" readonly tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+    <input class="inp" id="pwd" name="password" type="password" placeholder="Contraseña" autocomplete="current-password" required>
     <button class="btn btn-full" id="login-btn" type="submit">Entrar</button>
     <div class="err hidden" id="login-err"></div>
   </form>
