@@ -53,12 +53,10 @@
   </div>
 </footer>
 <script>
-// NIF y email se montan con JavaScript para que no los lean los bots que rastrean la web
+// El email se monta con JavaScript para que no los lean los bots que rastrean la web
 (function(){
-  var n = ['5','0','3','1','8','4','2','2','B'];
   var u = ['e','a','s'], d = ['d','e','l','e','n','s','.','e','s'];
   var mail = u.join('') + '@' + d.join('');
-  document.querySelectorAll('.js-nif').forEach(function(el){ el.textContent = n.join(''); });
   document.querySelectorAll('.js-mail').forEach(function(el){
     var a = document.createElement('a'); a.href = 'mailto:' + mail; a.textContent = mail;
     el.textContent = ''; el.appendChild(a);
