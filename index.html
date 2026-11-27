@@ -135,6 +135,7 @@
           <li><strong>Sin venta agresiva.</strong> Ni pitches, ni spam, ni captación insistente.</li>
           <li><strong>Compromiso.</strong> Si confirmas asistencia, acudes; si no puedes, avisas cuanto antes.</li>
         </ul>
+        <p><a href="condiciones.html">Consulta los valores, normas y condiciones de participación completos →</a></p>
       </div>
     </div>
   </section>
@@ -145,6 +146,13 @@
       <p class="eyebrow eyebrow-light">Cómo formar parte</p>
       <h2>Una comunidad que crece a través de sus miembros.</h2>
       <p>EAS crece a través de las personas que forman parte de ella. Si compartes esta manera de entender las relaciones empresariales, puedes solicitar información o pedir que te pongamos en contacto con la iniciativa. La incorporación se confirma después de una breve conversación.</p>
+      <p><strong>Primer desayuno: enero de 2027 en Collado Villalba.</strong> Grupos de 6 a 12 personas, plazas limitadas.</p>
+      <ol>
+        <li>Envías tu solicitud.</li>
+        <li>Hablamos 15 minutos para conocernos.</li>
+        <li>Completas tu perfil y aceptas las condiciones de participación.</li>
+        <li>Te invitamos al grupo y al próximo desayuno.</li>
+      </ol>
 
       <form class="form" id="form-eas" novalidate>
         <div class="field">
@@ -205,7 +213,7 @@
         </div>
         <label class="check-line">
           <input type="checkbox" name="acepta_normas" value="si" required>
-          <span>He leído las normas básicas y me comprometo a respetarlas.</span>
+          <span>He leído las <a href="condiciones.html">normas y condiciones de participación</a> y me comprometo a respetarlas.</span>
         </label>
         <label class="check-line">
           <input type="checkbox" name="acepta_privacidad" value="si" required>
@@ -213,12 +221,12 @@
         </label>
         <button class="btn btn-light" type="submit" id="form-btn">Enviar solicitud</button>
         <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
-        <p class="form-note">Enviar la solicitud no implica admisión automática. Te contactaremos para conocernos.</p>
+        <p class="form-note">Enviar la solicitud no implica admisión automática. Te escribiremos en menos de 48 horas para conocernos.</p>
       </form>
 
       <div class="form form-ok" id="form-ok" hidden>
         <h3>¡Gracias! Hemos recibido tu solicitud.</h3>
-        <p>Te contactaremos en los próximos días para tener una breve conversación y conocernos.</p>
+        <p>Te escribiremos en menos de 48 horas para tener una breve conversación y conocernos.</p>
       </div>
     </div>
   </section>
@@ -228,13 +236,35 @@
 <footer class="footer">
   <div class="wrap footer-in">
     <p><strong>EAS</strong> · Empresarios y Autónomos de la Sierra de Madrid</p>
-    <p>Iniciativa independiente · <a href="legal.html">Aviso legal</a> · <a href="privacidad.html">Privacidad</a></p>
+    <p>Iniciativa independiente · <a href="condiciones.html">Condiciones</a> · <a href="legal.html">Aviso legal</a> · <a href="privacidad.html">Privacidad</a> · <a href="cookies.html">Cookies</a></p>
   </div>
 </footer>
 
 <script>
 // Pega aquí la URL /exec del Apps Script de EAS (ver crm/eas_apps_script.js)
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbww--Q5-2uKLSTmcjGOKZyRw3PqHi6qiwQ80PPb6VJ0bi_FBDwVWFBdVtl8_pMWIgP3TA/exec';
+
+// Origen de la visita: etiqueta UTM del enlace (anuncios, LinkedIn…) o web desde la que llega.
+// Se guarda solo en esta pestaña del navegador (sessionStorage), sin cookies.
+function origenVisita(){
+  try {
+    const p = new URLSearchParams(location.search);
+    const src = p.get('utm_source'), camp = p.get('utm_campaign');
+    if (src) {
+      const o = (src + (camp ? ' / ' + camp : '')).slice(0, 150);
+      sessionStorage.setItem('eas_origen', o);
+      return o;
+    }
+    const guardado = sessionStorage.getItem('eas_origen');
+    if (guardado) return guardado;
+    if (document.referrer) {
+      const h = new URL(document.referrer).hostname.replace(/^www\./, '');
+      if (h && h !== location.hostname) { sessionStorage.setItem('eas_origen', h); return h; }
+    }
+  } catch (e) {}
+  return 'directo';
+}
+const ORIGEN = origenVisita();
 
 (function(){
   const form = document.getElementById('form-eas');
@@ -250,6 +280,7 @@ const ENDPOINT = 'https://script.google.com/macros/s/AKfycbww--Q5-2uKLSTmcjGOKZy
     }
     const data = Object.fromEntries(new FormData(form).entries());
     data.action = 'solicitud';
+    data.origen = ORIGEN;
     btn.disabled = true; btn.textContent = 'Enviando...';
     try {
       const r = await fetch(ENDPOINT, { method: 'POST', body: JSON.stringify(data) });
